@@ -110,7 +110,7 @@ object Huffman {
   /**
    * Checks whether the list `trees` contains only one single code tree.
    */
-  def singleton(trees: List[CodeTree]): Boolean = return trees.length == 1
+  def singleton(trees: List[CodeTree]): Boolean = trees.length == 1
 
   /**
    * The parameter `trees` of this function is a list of code trees ordered
@@ -203,7 +203,7 @@ object Huffman {
     def decodeIter(node: CodeTree, bits: List[Bit], acc: List[Char]): List[Char] = {
       if(bits.isEmpty) {
         val current = node match { case Leaf(c, w) => c } 
-        acc :+ current
+        current :: acc
       } 
       else {
         node match {
@@ -215,7 +215,7 @@ object Huffman {
         }
       }
     }
-    decodeIter(tree, bits, List[Char]()).reverse :+ 'l'
+    decodeIter(tree, bits, List[Char]()).reverse
   }
 
   /**
@@ -236,7 +236,7 @@ object Huffman {
    */
   def decodedSecret: List[Char] = decode(frenchCode, secret)
 
-  println(decodedSecret)
+  //println(decodedSecret)
 
   // Part 4a: Encoding using Huffman tree
 
@@ -244,7 +244,16 @@ object Huffman {
    * This function encodes `text` using the code tree `tree`
    * into a sequence of bits.
    */
-  def encode(tree: CodeTree)(text: List[Char]): List[Bit] = ???
+  def encode(tree: CodeTree)(text: List[Char]): List[Bit] = {
+    def encodeChar(char: Char): List[Bit] = {
+      0
+    }
+    def encodeStep(text: List[Char], acc: List[Bit]): List[Bit] = {
+      if(text.isEmpty) acc
+      else encodeStep(text.tail, acc ::: encodeChar(text.head))
+    }
+    encodeStep(text, List[Bit]())
+  }
 
 
   // Part 4b: Encoding using code table
